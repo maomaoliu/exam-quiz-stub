@@ -3,7 +3,6 @@ package blankQuiz
 import org.springframework.cloud.contract.spec.Contract
 
 Contract.make {
-    inProgress()
     description "should create a blank quiz"
 
     request {
@@ -15,7 +14,7 @@ Contract.make {
         body(
                 teacherId: $(consumer(regex('[a-zA-Z0-9]{36}'))),
                 question: $(consumer(regex('.{1,255}'))),
-                score: $(anyNumber()),
+                score: $(consumer(regex('100|[1-9][0-9]|[1-9]'))),
                 referenceAnswer: $(consumer(regex('.{1,4000}')))
         )
     }
@@ -26,7 +25,7 @@ Contract.make {
             contentType applicationJson()
         }
         body(
-                blankQuizId: $(producer(regex('[a-zA-Z0-9]{19}')), consumer('90fdknaf09fop5hmald'))
+                blankQuizId: $(producer(regex('[a-zA-Z-0-9]{36}')), consumer('8jk4lk-0d9ie-74jk-89lt8ikdj-6h50o8ij'))
         )
     }
 }
